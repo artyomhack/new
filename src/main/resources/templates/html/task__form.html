@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>List</title>
+</head>
+<body>
+<div>
+    <form method="post">
+        <div>
+            <input type="text" name="label" th:value="${label}" />
+            <span style="color: red" th:if="${errors?.label != null}"
+                  th:text="${errors}"></span>
+        </div>
+        <div>
+            <input type="hidden" name="id" th:value="${id}">
+
+        </div>
+        <div>
+            <button type="submit">Сохранить</button>
+            <a th:href="@{/tasks/delete/{id}(id=${id})}" style="color: red; padding: 10px">Удалить</a>
+        </div>
+    </form>
+</div>
+<div>
+    <p><a href="/tasks/list" style="font-size: 22px; padding: 5px">Task list</a></p>
+</div>
+<div>
+    <p><a href="/" style="font-size: 22px; padding: 5px">Menu</a></p>
+</div>
+</body>
+</html>
