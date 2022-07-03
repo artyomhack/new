@@ -23,4 +23,10 @@ public interface RelationRepository<MainID extends Entity.ID<?>, RelateID extend
 
     void addReverseRelations(RelateID relateId, Iterable<MainID> mainIds);
 
+    default void deleteRelation(MainID mainId, RelateID relateId) {
+        deleteAllRelations(mainId, List.of(relateId));
+    }
+
+    void deleteAllRelations(MainID mainId, Iterable<RelateID> relateIdList);
+
 }

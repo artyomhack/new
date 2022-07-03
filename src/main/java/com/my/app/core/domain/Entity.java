@@ -6,7 +6,6 @@ import java.util.Objects;
 
 public interface Entity extends ValueObject, Comparable<Entity> {
 
-
     interface ID<T> extends Value<T> {
         boolean isEmpty();
     }
