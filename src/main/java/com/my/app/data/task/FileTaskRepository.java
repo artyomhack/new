@@ -5,13 +5,22 @@ import com.my.app.domain.task.TaskId;
 
 public class FileTaskRepository extends FileRepository<TaskEntity, TaskId> {
 
-    protected FileTaskRepository(Class<TaskEntity> entity) {
-        super(entity);
+    protected FileTaskRepository() {
+        super(TaskEntity.class);
     }
 
 
     @Override
     protected TaskId mapOfSrc(Object src) {
-        return null;
+        return TaskId.of(src);
+    }
+
+    @Override
+    public TaskId getNextId() {
+        var allTaskId = findAll().stream().map(TaskEntity::getId).sorted().toList();
+
+        var lastId = allTaskId.get(allTaskId.size() - 1);
+
+        return TaskId.of(lastId.getValue() + 1);
     }
 }

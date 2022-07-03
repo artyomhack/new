@@ -4,9 +4,9 @@ import com.my.app.core.domain.type.Value;
 
 import java.util.List;
 
-public interface DataRepository<T, ID extends Value.AsPositiveInt> {
+public interface DataRepository<T extends Entity<ID>, ID extends EntityId<?>> {
 
-    <S extends T> S save(S entity);
+     ID save(T entity);
 
     boolean deleteById(ID id);
 

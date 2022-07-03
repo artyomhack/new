@@ -1,7 +1,6 @@
 package com.my.app.data.user;
 
 import com.my.app.core.domain.Entity;
-import com.my.app.domain.user.User;
 import com.my.app.domain.user.UserId;
 import com.my.app.domain.user.UserRequest;
 import lombok.AllArgsConstructor;
@@ -9,16 +8,12 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class UserEntity implements Entity {
+public class UserEntity implements Entity<UserId> {
 
     private final UserId userId;
     private final String firstName;
     private final String lastName;
 
-    @Override
-    public int compareTo(Entity o) {
-        return 0;
-    }
 
     public static UserEntity of(UserRequest request) {
         return new UserEntity(
@@ -28,16 +23,8 @@ public class UserEntity implements Entity {
         );
     }
 
-    public User.Data toDetails () {
-        return new User.Data(
-                getFirstName(),
-                getLastName()
-        );
+    @Override
+    public UserId getId() {
+        return userId;
     }
-
-    public User.ListItem toItem() {
-        var fullName = getFirstName() + " " + getLastName();
-        return new User.ListItem(fullName);
-    }
-
 }

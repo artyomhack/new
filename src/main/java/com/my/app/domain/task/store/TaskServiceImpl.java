@@ -3,7 +3,6 @@ package com.my.app.domain.task.store;
 import com.my.app.data.task.TaskEntity;
 import com.my.app.data.user.UserEntity;
 import com.my.app.domain.DomainException;
-import com.my.app.domain.task.Task;
 import com.my.app.domain.task.TaskId;
 import com.my.app.domain.task.TaskRequest;
 import com.my.app.domain.user.UserRequest;
@@ -46,21 +45,7 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public List<Task.ListItem> findAll() throws DomainException {
-        return taskRepository.findAll()
-                         .stream()
-                         .map(TaskEntity::toItem).toList();
-    }
-
-    @Override
     public boolean deleteById(TaskId id) throws DomainException {
         return taskRepository.deleteById(id);
-    }
-
-    @Override
-    public TaskEntity addUserToTask(TaskId id, UserRequest request) throws DomainException {
-        var entity = taskRepository.findById(id);
-        entity.add(userRepository.save(UserEntity.of(request)));
-        return taskRepository.save(entity);
     }
 }

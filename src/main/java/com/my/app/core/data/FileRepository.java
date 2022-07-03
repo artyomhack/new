@@ -2,6 +2,7 @@ package com.my.app.core.data;
 
 import com.my.app.core.domain.Entity;
 import com.my.app.core.domain.DataRepository;
+import com.my.app.core.domain.EntityId;
 import com.my.app.core.domain.type.Value;
 
 import java.io.*;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public abstract class FileRepository<T extends Entity, ID extends Value.AsPositiveInt>
+public abstract class FileRepository<T extends Entity<ID>, ID extends EntityId<?>>
         implements DataRepository<T, ID> {
 
     public final static String DATA_PATH = ".data";
@@ -23,9 +24,15 @@ public abstract class FileRepository<T extends Entity, ID extends Value.AsPositi
         entityPath = DATA_PATH + File.separator + entityClass.getSimpleName();
     }
 
-    public void save(T entity) {
+    public ID save(T entity) {
 
-        var entityFile = getFileById();
+        var id = entity.getId();
+
+        if (id.isEmpty()) {
+            id = getNextId();
+        }
+
+        var entityFile = getFileById(id);
 
         try {
             Files.deleteIfExists(entityFile.toPath());
@@ -36,6 +43,8 @@ public abstract class FileRepository<T extends Entity, ID extends Value.AsPositi
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        return id;
     }
 
 
@@ -69,11 +78,6 @@ public abstract class FileRepository<T extends Entity, ID extends Value.AsPositi
         } catch (Exception ignored) {
         }
         return null;
-    }
-
-    @Override
-    public ID getNextId() {
-        return mapOfSrc(getLastId().getValue() + 1);
     }
 
     @Override

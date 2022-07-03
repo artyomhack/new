@@ -1,6 +1,7 @@
 package com.my.app.core.data;
 
 import com.my.app.core.domain.Entity;
+import com.my.app.core.domain.EntityId;
 import com.my.app.core.domain.RelationRepository;
 import com.my.app.domain.task.TaskId;
 import com.my.app.domain.user.UserId;
@@ -12,7 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
-public abstract class RelationFileRepository<MainID extends Entity.ID<?>, RelateID extends Entity.ID<?>>
+public abstract class RelationFileRepository<MainID extends EntityId<?>, RelateID extends EntityId<?>>
         implements RelationRepository<MainID, RelateID> {
 
     private final static String RELATION_DATA_PATH = ".task_user"; //task_user
@@ -52,13 +53,13 @@ public abstract class RelationFileRepository<MainID extends Entity.ID<?>, Relate
         if (Objects.isNull(listFiles)) return Collections.emptyList();
 
         return Arrays.stream(listFiles)
-                .filter( file -> file.getName().startsWith(relateId + "_"))
+                .filter( file -> file.getName().endsWith("_" + relateId))
                 .map( file -> retrieveRelationMainIdFromName(file.getName()))
                 .toList();
     }
 
     private MainID retrieveRelationMainIdFromName(String fileName) {
-        return mapMainIdFromString(fileName.split("_")[1]);
+        return mapMainIdFromString(fileName.split("_")[0]);
     }
 
     @Override

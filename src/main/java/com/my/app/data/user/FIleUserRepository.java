@@ -5,14 +5,21 @@ import com.my.app.domain.user.UserId;
 
 public class FIleUserRepository extends FileRepository<UserEntity, UserId> {
 
-    protected FIleUserRepository(Class<UserEntity> entityClass) {
-        super(entityClass);
+    protected FIleUserRepository() {
+        super(UserEntity.class);
     }
 
     @Override
     protected UserId mapOfSrc(Object src) {
-        return null;
+        return UserId.of(src);
     }
 
+    @Override
+    public UserId getNextId() {
+        var allId = findAll().stream().map(UserEntity::getId).sorted().toList();
 
+        var lastId = allId.get(allId.size() - 1);
+
+        return UserId.of(lastId.getValue() + 1);
+    }
 }
