@@ -1,9 +1,9 @@
 package com.my.app.data.task;
 
-import com.my.app.core.data.FileRepository;
+import com.my.app.core.data.FileEntityRepository;
 import com.my.app.domain.task.TaskId;
 
-public class FileTaskRepository extends FileRepository<TaskEntity, TaskId> {
+public class FileTaskRepository extends FileEntityRepository<TaskEntity, TaskId> {
 
     protected FileTaskRepository() {
         super(TaskEntity.class);

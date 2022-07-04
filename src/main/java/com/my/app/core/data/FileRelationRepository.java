@@ -3,27 +3,23 @@ package com.my.app.core.data;
 import com.my.app.core.domain.Entity;
 import com.my.app.core.domain.EntityId;
 import com.my.app.core.domain.RelationRepository;
-import com.my.app.domain.task.TaskId;
-import com.my.app.domain.user.UserId;
-import lombok.val;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
-public abstract class RelationFileRepository<MainID extends EntityId<?>, RelateID extends EntityId<?>>
+public abstract class FileRelationRepository<MainID extends EntityId<?>, RelateID extends EntityId<?>>
         implements RelationRepository<MainID, RelateID> {
-
-    private final static String RELATION_DATA_PATH = ".task_user"; //task_user
 
     private final String relationsPath;
 
 
-    public RelationFileRepository(Class<MainID> mainIdClass, Class<RelateID> relateIdClass) {
-        relationsPath = RELATION_DATA_PATH + File.separator +
-                        mainIdClass.getSimpleName() + "_" + relateIdClass.getSimpleName() +  File.separator;
+    public FileRelationRepository(Class<? extends Entity<MainID>> mainEntityClass, Class<? extends Entity<RelateID>> relateEntityClass) {
+        var mainName = mainEntityClass.getSimpleName().replace("Entity", "");
+        var relName = relateEntityClass.getSimpleName().replace("Entity", "");
+        relationsPath = FileEntityRepository.DATA_PATH + File.separator +
+                mainName + "_" + relName +  File.separator;
     }
 //    main | relate
 //    81_54
@@ -106,4 +102,5 @@ public abstract class RelationFileRepository<MainID extends EntityId<?>, RelateI
     abstract protected RelateID mapRelateIdFromString(String relateId);
 
     abstract protected MainID mapMainIdFromString(String mainId);
+
 }

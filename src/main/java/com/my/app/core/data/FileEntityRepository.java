@@ -3,7 +3,6 @@ package com.my.app.core.data;
 import com.my.app.core.domain.Entity;
 import com.my.app.core.domain.DataRepository;
 import com.my.app.core.domain.EntityId;
-import com.my.app.core.domain.type.Value;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -13,15 +12,15 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public abstract class FileRepository<T extends Entity<ID>, ID extends EntityId<?>>
+public abstract class FileEntityRepository<T extends Entity<ID>, ID extends EntityId<?>>
         implements DataRepository<T, ID> {
 
     public final static String DATA_PATH = ".data";
 
     private final String entityPath;
 
-    protected FileRepository(Class<T> entityClass) {
-        entityPath = DATA_PATH + File.separator + entityClass.getSimpleName();
+    protected FileEntityRepository(Class<T> entityClass) {
+        entityPath = DATA_PATH + File.separator + entityClass.getSimpleName().replaceFirst("Entity", "");
     }
 
     public ID save(T entity) {

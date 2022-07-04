@@ -15,6 +15,7 @@ public interface Value<T> extends ValueObject {
     }
 
     abstract class AsNumber<T extends Number> implements Value<T> {
+
         private final T value;
 
         protected AsNumber(T value) {

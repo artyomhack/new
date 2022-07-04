@@ -16,6 +16,7 @@ public interface EntityId<T> extends Value<T>, Comparable<EntityId<T>> {
             super(src, true);
         }
 
+
         @Override
         final public boolean isEmpty() {
             return this.getValue() == emptyValue;
