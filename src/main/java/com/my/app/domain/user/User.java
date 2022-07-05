@@ -12,6 +12,10 @@ import java.util.Iterator;
 @AllArgsConstructor
 public class User implements DomainEntity<UserId> {
 
+    /**
+     * UserDetails
+     */
+
     private final UserId userId;
 
     private String firstName;
@@ -19,6 +23,20 @@ public class User implements DomainEntity<UserId> {
     private String lastName;
 
     private Iterator<Task> tasks;
+
+    public User(UserId userId, String firstName, String lastName) {
+        this.userId = userId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public static User userOf(String firstName, String lastName) {
+        return new User(
+                UserId.empty,
+                firstName,
+                lastName
+        );
+    }
 
     @Override
     public UserId getId() {

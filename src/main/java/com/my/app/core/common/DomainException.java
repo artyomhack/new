@@ -1,4 +1,4 @@
-package com.my.app.domain;
+package com.my.app.core.common;
 
 import lombok.Getter;
 

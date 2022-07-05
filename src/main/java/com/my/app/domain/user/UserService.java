@@ -18,6 +18,6 @@ public interface UserService {
 
     List<User> findAll();
 
-
+    List<UserId> findUserIdByTaskId(TaskId taskId);
 
 }

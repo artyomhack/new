@@ -18,5 +18,5 @@ public interface TaskService {
 
     List<Task> findAll();
 
-
+    List<TaskId> findTaskIdByUserId(UserId userId);
 }
